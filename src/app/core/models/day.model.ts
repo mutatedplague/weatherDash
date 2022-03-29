@@ -1,6 +1,6 @@
 export interface Day {
-    code: String;
-    date: Date,
+    code: number;
+    date: string,
     min: number,
     max: number
 }

@@ -2,11 +2,12 @@
 
 <main>
   <div class="mt-8 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <error-dialog *ngIf="errorMessage.length" message="{{errorMessage}}"></error-dialog>
+
     <div class="px-4 sm:px-0 shadow overflow-hidden">
 
-      <!-- <ag-grid-angular style="height: 500px;" class="ag-theme-alpine" [rowData]="rowData | async"
-        [columnDefs]="columnDefs">
-      </ag-grid-angular> -->
+      <ag-grid-angular style="height: 500px;" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs">
+      </ag-grid-angular>
 
     </div>
   </div>

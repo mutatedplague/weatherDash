@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ColDef } from 'ag-grid-community';
-import { WeatherService } from 'src/app/core/services/weather.service';
+import { AppState } from 'src/app/app-state';
+import { Day } from 'src/app/core/models/day.model';
+import { loadDays } from 'src/app/core/store/actions/weather.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,22 +12,30 @@ import { WeatherService } from 'src/app/core/services/weather.service';
 })
 export class DashboardComponent implements OnInit {
 
+  errorMessage: string = "";
+
   columnDefs: ColDef[] = [
     { field: 'code', sortable: true, filter: true },
     { field: 'date', sortable: true, filter: true },
     { field: 'min', sortable: true, filter: true },
     { field: 'max', sortable: true, filter: true }
   ];
-
-  // rowData: Observable<any[]>;
-
-  constructor(private weather: WeatherService) {
   
+  rowData: Day[] = [];
 
-    
+  constructor(private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
+    this.store.select('app').subscribe((data: any) => {
+      this.errorMessage = data['errorMessage'];
+    });
+
+    this.store.select('days').subscribe((data: any) => {
+      this.rowData = data['days'];
+    });
+    
+    this.store.dispatch(loadDays());
   }
 
 }
