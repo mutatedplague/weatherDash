@@ -13,7 +13,7 @@ export class WeatherService {
   constructor(private store: Store<AppState>, private http: HttpClient) {}
 
   getWeatherData(): Observable<Day[]> {
-    return this.http.get('https://api.open-meteo.om/v1/forecast?latitude=39.07&longitude=-83.11&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&past_days=2').pipe(map((data) => {
+    return this.http.get('https://api.open-meteo.com/v1/forecast?latitude=39.22&longitude=-82.99&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&past_days=2').pipe(map((data) => {
       let days: Day[] = [];
       days = this.formatWeatherData(data);
       return days;
@@ -30,7 +30,12 @@ export class WeatherService {
         code: range['weathercode'][i],
         date: range['time'][i],
         min: range['temperature_2m_min'][i],
-        max: range['temperature_2m_max'][i]
+        max: range['temperature_2m_max'][i],
+        precipDuration: range['precipitation_hours'][i],
+        precipSum: range['precipitation_sum'][i],
+        sunrise: range['sunrise'][i],
+        sunset: range['sunset'][i],
+        windspeed: range['windspeed_10m_max'][i]
       };
 
       results.push(item);

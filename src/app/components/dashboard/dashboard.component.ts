@@ -18,12 +18,18 @@ export class DashboardComponent implements OnInit {
     { field: 'code', sortable: true, filter: true },
     { field: 'date', sortable: true, filter: true },
     { field: 'min', sortable: true, filter: true },
-    { field: 'max', sortable: true, filter: true }
+    { field: 'max', sortable: true, filter: true },
+    { field: 'precipDuration', sortable: true, filter: true },
+    { field: 'precipSum', sortable: true, filter: true },
+    { field: 'sunrise', sortable: true, filter: true },
+    { field: 'sunset', sortable: true, filter: true },
+    { field: 'windspeed', sortable: true, filter: true },
   ];
   
   rowData: Day[] = [];
 
   constructor(private store: Store<AppState>) {
+    
   }
 
   ngOnInit(): void {
@@ -34,7 +40,7 @@ export class DashboardComponent implements OnInit {
     this.store.select('days').subscribe((data: any) => {
       this.rowData = data['days'];
     });
-    
+
     this.store.dispatch(loadDays());
   }
 
